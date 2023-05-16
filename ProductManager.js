@@ -25,7 +25,7 @@ class ProductManager {
 
   updateProduct = async (index, updatedProduct) => {
     let products = await this.getProducts();
-    products[index] = { ...products[index], ...updatedProduct };
+    products[index] = { products[index], updatedProduct };
     await fs.promises.writeFile(this.filePath, JSON.stringify(products, null, '\t'))
   }
 
