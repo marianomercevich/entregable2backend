@@ -23,11 +23,14 @@ class ProductManager {
     return products.find(product => product.id === id);
   }
 
+
   updateProduct = async (index, updatedProduct) => {
-    let products = await this.getProducts();
-    products[index] = { products[index], updatedProduct };
-    await fs.promises.writeFile(this.filePath, JSON.stringify(products, null, '\t'))
-  }
+    const products = await this.getProducts();
+    const product = products.find((item) => item.id === index);
+    const productIndex = products.findIndex((item) => item.id === index);
+    products[productIndex] = { ...products[productIndex], ...updatedProduct };
+    await fs.promises.writeFile(this.filePath, JSON.stringify(products, null, '\t'));
+  };
 
   deleteProduct = async (index) => {
     let products = await this.getProducts()
@@ -40,8 +43,8 @@ class ProductManager {
 
 const manager = new ProductManager('./products.json')
     manager.getProducts()
-    manager.addProduct( 'id', 'producto prueba', 'Este es un producto prueba', 1500, 'Sin imagen', 'abc122', 5)
-   /*  manager.updateProduct(2, { price: 700 }) */
+   /*  manager.addProduct( 'producto prueba','descripcion prueba', 500, 'Sin imagen', 'abc122', 50) */
+    manager.updateProduct(5, {title:"producto", price: 1700, code:"nada" }) 
     /* manager.deleteProduct(0) */
 
 
